@@ -1,0 +1,88 @@
+import {View} from "@dlightjs/dlight";
+import { css } from '@emotion/css'
+import {footerWrap, footerMenuTitle, footerMenuWrap, footerMenuItem} from "./style.module.css"
+import {a, div, Prop} from "@dlightjs/useless";
+
+const color = 'black'
+
+class FooterItem extends View {
+    @Prop title
+    @Prop menu = []
+    Body() {
+        div()
+        {
+            div(this.title)
+                .className(footerMenuTitle)
+            div()
+                .className(footerMenuWrap)
+            {
+                for (let item of this.menu) {
+                    a(item.itemName)
+                        // .className(footerMenuItem)
+                        .className(css`
+                            color: rgb(101, 90, 63);
+                          text-decoration: none;
+                        `)
+                        .href(item.path??'')
+                }
+            }
+        }
+    }
+}
+
+export class Footer extends View {
+    menus = [
+        {
+            title: 'Docs',
+            menu: [{
+                    itemName: 'Guide',
+                    path: '',
+                },
+                {
+                    itemName: 'Tutorial',
+                    path: '',
+                },
+                {
+                    itemName: 'Advance',
+                    path: ''
+                }],
+        },
+        {
+            title: 'Team',
+            menu: [{
+                    itemName: 'duan yihan',
+                    path: '',
+                },
+                {
+                    itemName: 'chen xinyi',
+                    path: '',
+                },
+            ]
+        },
+        {
+            title: 'News',
+            menu: [{
+                itemName: 'Blog',
+                path: '',
+            }]
+        }
+    ]
+    Body() {
+        div()
+            .className(footerWrap)
+        {
+            for (let menuItem of this.menus){
+                FooterItem()
+                    .title(menuItem.title)
+                    .memu(menuItem.menu)
+            }
+        }
+        div("copyright")
+            .className(css`
+                width: 70px;
+                color: rgb(101, 90, 63);
+                margin: 0px auto;
+                padding-bottom: 10px;
+            `)
+    }
+}
